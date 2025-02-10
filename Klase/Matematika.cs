@@ -1,4 +1,4 @@
-﻿static class Matematika
+﻿static public class Matematika
 {
     public static float Izracunaj_Popust(Proizvod param_proizvod)
     {

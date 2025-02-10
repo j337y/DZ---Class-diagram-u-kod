@@ -1,37 +1,75 @@
-﻿class Korisnik
+﻿public class Korisnik
 {
+    private static int Broj_instanciranih_objekata = 0;
     private int ID_Korisnika;
 
     protected string Ime;
     private string Lozinka;
-
     protected string Email;
+
+    public bool prijavljen { get; private set; }
+    public bool registriran { get; private set; }
 
     public Korisnik()
     {
-        this.ID_Korisnika = 0;
-
-        this.Ime = "null";
-        this.Lozinka = "";
-
-        this.Email = "null";
-    }
-
-    public Korisnik(int param_id, string param_ime, string param_lozinka, string param_email)
-    {
-        this.ID_Korisnika = param_id;
-        this.Ime = param_ime;
-        this.Lozinka = param_lozinka;
-        this.Email = param_email;
+        Broj_instanciranih_objekata++;
+        this.ID_Korisnika = Broj_instanciranih_objekata;
     }
 
     public bool prijava(string param_mail, string param_lozinka)
     {
-        throw new NotImplementedException();
+        if (this.registriran)
+        {
+            if (this.Email == param_mail && this.Lozinka == param_lozinka)
+            {
+                this.prijavljen = true;
+                return true;
+            }
+            return false;
+        }
+
+        return false;
+    }
+
+    public bool odjava()
+    {
+        if (this.prijavljen)
+        {
+            this.prijavljen = false;
+            return true;
+        }
+
+        return false;
     }
 
     public bool registracija(string param_ime, string param_mail, string param_lozinka)
     {
-        throw new NotImplementedException();
+        if (this.registriran)
+        {
+            return false;
+        }
+
+        if (param_ime.Length == 0 || param_mail.Length == 0 || param_lozinka.Length == 0)
+        {
+            throw new ArgumentException("Ime, email i lozinka ne smiju biti prazni");
+        }
+
+        if (!param_mail.Contains("@"))
+        {
+            throw new ArgumentException("Nevazeci email format");
+        }
+
+        if (param_lozinka.Length < 6)
+        {
+            throw new ArgumentException("Lozinka mora biti barem 6 znakova duga");
+        }
+
+        // Uspješno registriraj korisnika
+        this.Ime = param_ime;
+        this.Email = param_mail;
+        this.Lozinka = param_lozinka;
+        this.registriran = true;
+
+        return true;
     }
 }
