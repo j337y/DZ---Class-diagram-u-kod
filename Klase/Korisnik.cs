@@ -64,7 +64,6 @@
             throw new ArgumentException("Lozinka mora biti barem 6 znakova duga");
         }
 
-        // Uspješno registriraj korisnika
         this.Ime = param_ime;
         this.Email = param_mail;
         this.Lozinka = param_lozinka;
